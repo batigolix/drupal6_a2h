@@ -90,8 +90,13 @@ DirectoryIndex index.php
   # RewriteCond %{HTTP_HOST} ^example\.com$ [NC]
   # RewriteRule ^(.*)$ http://www.example.com/$1 [L,R=301]
 
-#  RewriteCond %{HTTP_HOST} ^veldeke-krink-venlo\.nl$ [NC]
-#  RewriteRule ^(.*)$ http://www.veldeke-krink-venlo.nl/$1 [L,R=301]
+RewriteCond %{HTTP_HOST} ^veldeke-krink-venlo\.nl$ [NC]
+RewriteRule ^(.*)$ http://www.veldeke-krink-venlo.nl/$1 [L,R=301]
+
+RewriteCond %{HTTP_HOST} ^volkstheater-venlo\.nl$ [NC]
+RewriteRule ^(.*)$ http://www.volkstheater-venlo.nl/$1 [L,R=301]
+
+
 
 #  RewriteCond %{HTTP_HOST} ^nederlandese\.org$ [NC]
 #  RewriteRule ^(.*)$ http://neerlandese.org/$1 [L,R=301]
