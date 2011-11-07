@@ -1,0 +1,5 @@
+; $Id$
+name = Wiki de Viki
+description = Extreme simple wiki formatting filter based on the now deceased wiki.module filter (http://drupal.org/project/wiki) which enabled users to use simple WikiText markup to format content. based on v wiki.module,v 1.17.0.1 2007/03/31 12:00:00 by mindless
+core = 6.x
+package = Input filters

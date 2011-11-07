@@ -1,0 +1,10 @@
+name = Mokusneeuw, theme for doesdesign
+description = Table-based multi-column theme based on bluemarine
+version = VERSION
+core = 6.x
+engine = phptemplate
+
+regions[left] = linker zijbalk regio
+regions[right] = rechter zijbalk regio
+regions[content_bottom] = onder de inhoud regio
+regions[bottom] = onder de pagina regio

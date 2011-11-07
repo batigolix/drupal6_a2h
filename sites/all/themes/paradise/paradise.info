@@ -1,0 +1,25 @@
+; $Id: paradise.info,v 1.1 2009/06/12 06:55:20 agileware Exp $
+name = Paradise
+description = Tableless, multi-column, fixed width theme
+screenshot = screenshot.png
+core = 6.x
+engine = phptemplate
+regions[left] = Left sidebar
+regions[right] = Right sidebar
+regions[content] = Content
+regions[featured] = Featured
+regions[navigation] = Menu
+regions[footer] = Footer
+stylesheets[all][] = style.css
+stylesheets[all][] = custom.css
+scripts[] = script.js
+features[] = logo
+features[] = mission
+features[] = comment_user_picture
+features[] = favicon
+; Information added by drupal.org packaging script on 2010-12-31
+version = "6.x-1.0-beta2"
+core = "6.x"
+project = "paradise"
+datestamp = "1293833059"
+

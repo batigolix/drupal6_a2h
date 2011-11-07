@@ -1,0 +1,6 @@
+name = henric
+description = theme voor veldeke krink venlo
+version = VERSION
+core = 6.x
+engine = phptemplate
+

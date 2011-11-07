@@ -1,0 +1,5 @@
+name = Boermans
+description = Volkstheater Venlo theme
+version = VERSION
+core = 6.x
+engine = phptemplate

@@ -1,0 +1,284 @@
+/* Boris Doesborg
+   boris@doesb.org
+   http://boris.doesb.org
+*/
+
+div {
+border: 0px green solid;
+}
+
+
+body {
+  background: #FFF;
+  color: #777;
+  font-family: Verdana, Courier, monospace;
+  font-size: 11px;
+  margin: 0;
+  padding: 80px 15% 32px 128px;
+  text-align: center;
+  }
+#container {
+  width: 100% -12px;
+  border: 0px #999 solid;
+  text-align: left;  
+}
+.intro {
+  text-align: justify;
+}
+#header {
+  width: 100%;
+}
+#sidebar-left {
+  width: 240px;
+
+}
+#another-column {
+  width: 120px;
+}
+#center-column {
+ width: 420px;
+}
+#main {
+
+}
+#bar {
+  border-bottom: 2px black solid;
+  margin: 2px 0 2px 0;
+}
+a:link {
+  color: #777;
+  text-decoration: none;
+  }
+a:visited {
+  color: #777;
+  text-decoration: none;
+}
+a:active {
+  color: #000;
+  text-decoration: none;
+}
+a:hover {
+  color: #2AE6FE;
+  text-decoration: none;
+}
+#menu {
+ margin-top: 400px;
+ padding: 20px;
+ text-align: center;
+}
+#header-inner {
+ text-align: center;
+ display: inline;
+}
+h1, .title, .site-name  { 
+ font-family: Verdana, arial, helvetica, sans-serif;
+/* font-family: "Andale Mono", arial, helvetica, sans-serif; */
+ font-size: 20px;
+ font-weight: bold;
+ color: #444;
+ padding: 0;
+ margin: 0 0 40px 0;
+ font-weight: normal !important;
+/* text-transform: lowercase; */
+ }
+h2 { 
+ font-family: Verdana, arial, helvetica, sans-serif;
+ font-size: 1.1em;
+ font-weight: normal;
+ color: #333;
+ padding: 0;
+ margin: 30px 0 18px 0;
+ font-weight: normal !important;
+  }
+p {
+ padding: 0;
+ margin: 0 0 18px 0;
+}
+#navlist a {
+  text-decoration: none;
+  color: #111;
+  font-weight: bold;
+  font-size: 1.1em;
+ font-family: Verdana, arial, helvetica, sans-serif;
+}
+.views-field-title {
+  text-decoration: none;
+  color: #111;
+  font-weight: bold;
+  padding: 2px 0 12px 0;
+  color:#000;
+  font-family:Verdana,Arial,Helvetica,sans-serif;
+  font-size:11px;
+  margin: 0;
+}
+
+
+#navlist a:link, #navlist a:visited, #navlist a:active {
+  color: #AAA;
+  }
+#navlist a:hover {
+ color: #2AE6FE;
+  }
+#navlist a.active {
+ color: #000 !important 
+}
+br.clear {
+  clear: both;
+}
+.decopic {
+  border: #eee solid 1px;
+  float: right;
+  display: inline;
+}
+.decopic img {
+  border: #000066;
+}
+.spacer {
+  clear: both;
+  }
+.work-teaser {
+  float: left;
+  text-align: center;
+  width: 160px;
+  text-align: center;
+  padding: 12px 24px 12px 0;
+  }
+.work-teaser p {
+  width: 140px;
+  margin: 6px 0 0 0;
+  padding: 0; 
+}
+tbody {
+  border-top: 0 #FFF none !important;
+}
+.intro .col1, .intro .col2 {
+  text-align: justify;
+  width: 351px;  
+}
+.intro .col1 {
+  padding-right: 12px;
+ color: #555;
+}
+.intro .col2 {
+  padding-left: 12px;
+  color: #000;
+}
+.XXXnode_images img {
+  border: #CCC solid 1px;
+  padding: 12px;
+  margin: 12px 0 12px 0;
+}
+.taxonomy li {
+}
+.site-name a {
+  text-decoration: none  !important;
+  font-weight: normal !important;
+  color: #000 !important;
+}
+
+li.leaf {
+list-style-image: url(sl1.gif);
+}
+
+li.leaf:hover {
+list-style-image: url(sl2.gif);
+}
+
+#block-menu-primary-links {
+ font-size: 11px;
+}
+
+.page-9 .title {
+display: none;
+}
+
+.site-name {
+
+}
+.views-row-odd, .views-row-even, .views-row {
+margin: 10px 0 15px 0 !important;
+} 
+.view-images .views-row .taxonomy, .view-images .views-row p {
+display: none;
+}
+
+.view-images .views-row .title a {
+color: #000 !important;
+}
+.view-images .views-row .content, .view-images .views-row .views-field-image-image {
+ text-align: right;
+ min-width: 220px;
+}
+
+.view-images .views-row .content img{
+}
+
+.view-images .views-row-odd, .view-images .views-row-even {
+border-top: 0;
+
+}
+
+.node .taxonomy, .node .links {
+display: none;
+}
+
+.view .image-gallery-nodes ul li {
+  display: block;
+  height: auto;
+  text-align: center;
+  width: auto;
+}
+
+.view .image-gallery-terms li {
+border: 0 solid #FFF;
+margin: 20px 0 20px 0;
+padding: 0 0 20px 0;
+color:#777;
+font-family:Verdana,Arial,Helvetica,sans-serif;
+font-size:11px;
+text-decoration:none;
+border-bottom: 2px #ccc solid;
+}
+.view .image-gallery-terms li h3 {
+font-size: 11px;
+}
+.views-field-image-gallery-latest-thumbnail-1 {
+  min-width: 220px;
+}
+
+.views-view-grid  td {
+min-width: 200px;
+padding-right: 12px; 
+
+}
+
+.node .content a {
+ text-decoration: underline;
+}
+
+.block ul.menu {
+margin: 40px 0 0 0;
+padding: 0 0 0 18px;
+}
+
+ul.menu li {
+margin:0 0 10px 0;
+padding-left: 6px;
+}
+
+.image-preview {
+margin-bottom: 20px;
+}
+
+.views-row {
+ border-bottom: 2px #CCC solid;
+ padding-bottom: 10px;
+ margin-bottom: 10px;
+}
+.view-image-gallery .views-field-title {
+ font-weight: normal;
+}
+#footer {
+padding-top: 100px;
+
+}

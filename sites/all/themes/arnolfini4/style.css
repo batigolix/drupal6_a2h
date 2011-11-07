@@ -1,0 +1,242 @@
+body {
+  color: #333;
+  background: #E5E5EF url(images/dog.jpg) right bottom no-repeat;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: 0.8em;
+  padding: 0;
+  margin: 0;
+  padding: 0 0 0 0;
+  }
+#container {
+  width: 742px;
+  border-right: 1px solid #333;
+}
+a:link {
+  color: #000066;
+  }
+a:visited {
+  color: #006699;
+}
+a:active {
+  color: #000099;
+}
+a:hover {
+  color: #000;
+}
+table#content {
+  border-collapse: collapse;
+}
+#header {
+  background: #EEE0CF url(images/arnolfinis_01.jpg) right repeat-y;
+  height: 244px;
+  width: 100%;
+  }
+#logo {
+}
+#slogan-etc {
+  margin: 0;
+  font-size: 0.85em;
+  color: #EEE;
+  background: #006699;
+  padding: 4px; 
+  text-align: center;
+  border-bottom: #000066 solid 1px;
+  border-top: #000066 solid 1px;
+}
+#slogan-etc a:hover, #slogan-etc a:visited, #slogan-etc a:active, #slogan-etc a:link {
+  text-decoration: none;
+  font-weight: bold;
+  color: #FFF;
+  }
+#slogan-etc a:hover {
+  color: yellow;
+  text-decoration: underline;
+  }
+#logo {
+ text-align: right;
+ vertical-align: top;
+ padding-right: 16px;
+}
+.site-name {
+  display: none;
+}
+h1 { 
+  font-size: 1.4em; 
+  padding: 0;
+  margin: 16px 0 0 0;
+  color: #A02F0F;
+  }
+h2 { 
+  font-size: 1.2em; 
+  padding: 0;
+  margin: 16px 0 0 0;
+  color: #000066;
+  }
+h2.content-title {
+  font-size: 1.85em;
+  color: #A02F0F;
+  padding: 0 8px 12px 0;
+}
+h3 {
+  font-size: 1.1em; 
+  font-weight: bold;
+  padding: 0;
+  margin: 8px 0 0 0;
+  }
+h4, h5, h6 { 
+ font-size: 1em; 
+ font-weight: bold;
+  }
+p {
+  padding: 0;
+  margin: 0 0 4px 0;
+}
+#sidebar-left {
+  background: #FFF url(images/arnolfinis_03.jpg) no-repeat top left;
+  width: 160px;
+  padding: 0px;
+  border-right: #EEE solid 2px;
+}
+.block li {
+ list-style-image: url(images/li.png);
+  
+}
+.block {
+  padding: 6px;
+  margin: 6px;
+  border: #ccc solid 1px;
+  background: #fff;
+  width: 134px;
+  overflow: auto;
+}
+#primary {
+  margin: 0;
+}
+#primary a:hover, #primary a:visited, #primary a:active, #primary a:link {
+  text-decoration: none;
+  color: #000066;
+  font-weight: bold;
+  font-size: 0.95em;
+  }
+#primary a:hover {
+  color: black;
+  text-decoration: underline;
+  }
+.block h3, .block h2 {
+  padding-left: 58px;
+  margin: 4px 0 4px 0;
+  background: url(images/header-deco.png) no-repeat bottom left;
+  }
+#main {
+
+
+  }
+#main-container {
+  background: #FFF url(images/arnolfinis_04.jpg) left top no-repeat;
+  padding: 0 16px 16px;
+  width: 100%;
+}
+br.clear {
+  clear: both;
+}
+.breadcrumb {
+  padding: 4px 0 0 0;
+  color: #000;
+}
+.breadcrumb a:hover, .breadcrumb a:visited, .breadcrumb a:active, .breadcrumb a:link {
+  color: #444;
+
+  }
+legend {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.bar {
+  border-bottom: #A02F0F solid 1px;
+  margin: 8px -16px 8px -16px;
+}
+.book .nav {
+  border-top: #A02F0F solid 1px;
+  margin: 8px -16px 8px -16px;
+  display: none;
+  }
+.book .nav .links, .book .nav .titles {
+  margin: 8px 16px 8px 16px;
+}
+
+.storyendbar {
+  border-top: #A02F0F solid 1px;
+  margin: 8px -16px 8px -16px;
+}
+
+#footer {
+  text-align: center;
+  font-size: 0.95em;
+  background: #000066;
+  color: #EEE;
+  padding: 4px;
+}
+#footer a:hover, #footer a:visited, #footer a:active, #footer a:link {
+  text-decoration: none;
+  color: #EEE;
+  font-weight: bold;
+  }
+#footer a:hover {
+  color: #FFF;
+  text-decoration: underline;
+  }
+#menu {
+ background: #99CCFF;
+ color: #333;
+ padding: 4px 4px 4px 8px; 
+ font-size: 0.9em;
+ border-bottom: #000066 solid 1px;
+ }
+#menu a:hover, #menu a:visited, #menu a:active, #menu a:link {
+ color: #333; text-decoration: none; font-weight: bold;
+ }
+.info, .terms { 
+  display: none; 
+}
+.decopic {
+  border: #eee solid 1px;
+  float: right;
+  display: inline;
+}
+.decopic img {
+  border: #000066;
+}
+.example {
+  margin-left: 24px;
+  line-height: 175%;
+  font-size: 1.1em;
+}
+.item-list ul, .item-list li {
+  list-style: none;
+}
+.views-field-title {
+  margin-bottom: 4px;
+}
+.site-slogan {
+ margin-top:116px;
+ color: #FFF;
+ font-size: 1.4em;
+ font-weight: bold;
+ letter-spacing: 0.1em;
+}
+.submitted {
+ font-size: 0.8em;
+ color: #666;
+}
+.block-book {
+ padding: 6px;
+}
+.block-book li {
+ margin: 0;
+ padding: 0;
+}
+.block-book ul {
+ margin: 0 0 0 4px;
+ padding: 0;
+}

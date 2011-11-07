@@ -1,0 +1,114 @@
+<?php
+// $Id: taxonomy_image_node_display.module,v 1.1.4.7 2008/12/30 01:33:29 nancyw Exp $
+
+/**
+ * @file
+ *   Display taxonomy images in nodes where and when you want them.
+ */
+
+/**
+ * Implementation of hook_nodeapi().
+ */
+function taxonomy_image_node_display_nodeapi(&$node, $op, $teaser = NULL, $page = NULL) {
+  if ($op == 'view') {
+    if ($teaser == TRUE && ! variable_get('taxonomy_image_node_view_teaser', TRUE)) {
+      return;
+    }
+    // If we are using the block module, then don't default to showing on a page.
+    if ($page == TRUE && ! variable_get('taxonomy_image_node_view_page', !module_exists('taxonomy_image_blocks'))) {
+      return;
+    }
+
+    $valid_nodes = variable_get('taxonomy_image_node_view', array()); 
+    if ($valid_nodes[$node->type] && isset($node->taxonomy)) {
+      $images = array();
+      $view_link = variable_get('taxonomy_image_node_view_link', TRUE);
+      foreach ($node->taxonomy as $tid => $term) {
+        $image = taxonomy_image_display($tid);
+        if ($view_link && $image) {
+          $image = theme('taxonomy_image_display', $image, $term);
+        }
+        $images[] = $image;
+      }
+      $node->content['taxonomy_image'] = array(
+        '#value' => implode("\n", $images),
+        '#weight' => variable_get('taxonomy_image_node_view_weight', -5),
+        );
+    }
+  }
+}
+
+/**
+ * Implementation of hook_theme().
+ */
+function taxonomy_image_node_display_theme() {
+  return array(
+    'taxonomy_image_display' => array(
+      'arguments' => array('image', 'term'),
+    ),
+  );
+}
+
+/*
+ * Theming function to allow overrides at theme level
+ */
+function theme_taxonomy_image_display($image, $term) {
+  return l($image, 'taxonomy/term/'. $term->tid, array('html' => TRUE, 'attributes' => array('class' => 'taxonomy_image_links'))) . $term->name;
+}
+
+/**
+ * Implementation of hook_form_alter().
+ */
+function taxonomy_image_node_display_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'taxonomy_image_admin_settings') {
+    $form['node_view'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Node Display'),
+      '#weight' => 0,
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
+      );
+
+      $form['node_view']['taxonomy_image_node_view'] = array(
+      '#type' => 'checkboxes',
+      '#title' => t('Display taxonomy images on tagged nodes'),
+      '#options' => array_map('check_plain', node_get_types('names')),
+      '#default_value' => variable_get('taxonomy_image_node_view', array()),
+      '#description' => t('Show images in the selected content types.'),
+      '#prefix' => '<div class="taxonomy_image_checkboxes">',
+      '#suffix' => '</div>',
+      );
+
+      $form['node_view']['taxonomy_image_node_view_teaser'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Show Taxonomy Image in node teaser view'),
+      '#default_value' => variable_get('taxonomy_image_node_view_teaser', TRUE),
+      '#prefix' => '<div class="clear-block"></div>',
+      );
+
+      // If we have the blocks module, then default to FALSE for page view.
+      $form['node_view']['taxonomy_image_node_view_page'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Show Taxonomy Image in node page view'),
+        '#default_value' => variable_get('taxonomy_image_node_view_page', !module_exists('taxonomy_image_blocks')),
+        );
+
+      $form['node_view']['taxonomy_image_node_view_link'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Link displayed Taxonomy Image to taxonomy/term/n page'),
+      '#default_value' => variable_get('taxonomy_image_node_view_link', TRUE),
+      '#prefix' => '<div class="clear-block"></div>',
+      );
+
+      $form['node_view']['taxonomy_image_node_view_weight'] = array(
+      '#type' => 'weight',
+      '#title' => t('Display weight of taxonomy images'),
+      '#description' => t('Determines where the images will be displayed. Less than zero will place it before the content; greater than zero, after.'),
+      '#default_value' => variable_get('taxonomy_image_node_view_weight', -5),
+      );
+
+    $form['buttons']['submit']['#weight'] = 4;
+    $form['buttons']['reset']['#weight'] = 5;
+  }
+  return $form;
+}
