@@ -19,6 +19,9 @@
       <?php if ($logo) : ?>
         <a href="<?php print $base_path ?>" title="<?php print t('Home') ?>"><img src="<?php print($logo) ?>" alt="<?php print t('Home') ?>" border="0" /></a>
       <?php endif; ?>
+      <?php if ($site_name) : ?>
+        <div class='site-name'><a href="<?php print $base_path ?>" title="<?php print t('Home') ?>"><?php print($site_name) ?></a></div>
+      <?php endif;?>
     </div>
 
 <div id="primary-menu" summary="Navigation elements.">

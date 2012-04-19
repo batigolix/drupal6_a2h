@@ -293,3 +293,16 @@ color: #FFF;
 	font-weight: bold;
 	margin: 10px 0;
 	}  
+	
+	
+ #logo .site-name {
+  font-size: 350%;
+  font-weight: bold;
+  font-family: 'Fredoka One';
+  text-shadow: black 0.1em 0.1em 0.2em;
+   }	
+
+#logo .site-name a {
+  color: #FFF;
+  text-decoration: none;
+}
