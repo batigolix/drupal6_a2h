@@ -1,0 +1,12 @@
+name = "Read Only Mode"
+description = "This module will lock your site for any node and/or comment postings."
+core = "6.x"
+
+
+
+; Information added by drupal.org packaging script on 2012-04-29
+version = "6.x-1.1"
+core = "6.x"
+project = "readonlymode"
+datestamp = "1335693080"
+
