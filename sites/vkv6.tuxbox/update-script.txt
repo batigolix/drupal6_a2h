@@ -1,4 +1,0 @@
-// dis custom theme
-drush @vkv6.tbx vset theme-default garland;
-// dis contrib
-drush @vkv6.tbx dis fontyourface, google_fonts_api, backup_migrate, linkchecker, mollom, content, nodereference, optionwidgets, text, image, wikideviki, gallery_manage, googleanalytics, views, webform, henric

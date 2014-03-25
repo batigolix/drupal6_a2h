@@ -1,0 +1,4 @@
+name = Boermans Tools
+description = "Provides misc tools for Boermans website"
+package = Administration
+core = 6.x

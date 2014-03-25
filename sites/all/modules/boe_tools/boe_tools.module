@@ -1,0 +1,108 @@
+<?php
+
+/**
+ * Implementation of hook_filter_tips().
+ *
+ * This hook allows filters to provide help text to users during the content
+ * editing process. Short tips are provided on the content editing screen, while
+ * long tips are provided on a separate linked page. Short tips are optional,
+ * but long tips are highly recommended.
+ */
+function boe_tools_filter_tips($delta, $format, $long = FALSE) {
+  switch ($delta) {
+    case 0:
+      if ($long) {
+        return t('Viki formatting');
+      }
+      break;
+  }
+}
+
+/**
+ * Implementation of hook_filter().
+ *
+ * The bulk of filtering work is done here. This hook is quite complicated, so
+ * we'll discuss each operation it defines.
+ */
+function boe_tools_filter($op, $delta = 'viki', $format = -1, $text = '') {
+  // The "list" operation provides the module an opportunity to declare both how
+  // many filters it defines and a human-readable name for each filter. Note that
+  // the returned name should be passed through t() for translation.
+  if ($op == 'list') {
+    return array(
+        0 => t('Substitute "viki"'),
+    );
+  }
+
+  // All operations besides "list" provide a $delta argument so we know which
+  // filter they refer to. We'll switch on that argument now so that we can
+  // discuss each filter in turn.
+  switch ($delta) {
+
+    // First we define the simple string substitution filter.
+    case 0:
+
+      switch ($op) {
+        // This description is shown in the administrative interface, unlike the
+        // filter tips which are shown in the content editing interface.
+        case 'description':
+          return t('Replace viki formatting with HTML');
+
+        // We don't need the "prepare" operation for this filter, but it's required
+        // to at least return the input text as-is.
+        case 'prepare':
+          return $text;
+
+        // The actual filtering is performed here. The supplied text should be
+        // returned, once any necessary substitutions have taken place.
+        case 'process':
+          return boe_tools_process_viki($text);
+      }
+      break;
+  }
+}
+
+function boe_tools_process_viki($text) {
+
+
+  /*  $body = preg_replace('/__(.*?)__/', '<strong>${1}</strong>', $body);
+    $body = preg_replace('/\[(?!img_assist)(.*?)\|(.*?)\]/', '<a href="${2}">${1}</a>', $body);
+    $body = preg_replace('/\!\!\!(.*)\\r/', '<h1>${1}</h1>', $body);
+    $body = preg_replace('/\[(?!img_assist)(.*?)\|(.*?)\]/', '<a href="${2}">${1}</a>', $body);
+    $body = preg_replace('/\!\!(.*)\\r/', '<h2>${1}</h2>', $body);
+    $body = preg_replace('/\!([A-Z])(.*)\\r/', '<h3>${1}${2}</h3>', $body);
+    $body = preg_replace('/\!(\<a)(.*)\\r/', '<h3>${1}${2}</h3>', $body);
+    $body = preg_replace('/\!(\<str)(.*)\\r/', '<h3>${1}${2}</h3>', $body);
+    $body = preg_replace('/\%\%\%/', '<hr />', $body);
+    $body = preg_replace('/---(.*)---\\r/', '<hr />', $body);
+   * 
+   * 
+   *     $body = preg_replace('/\*(.*)\\r/', '<li>${1}</li>',$body); 
+
+   */
+
+  $vikis = array(// TODO complete this list
+
+      '/__(.*?)__/' => '<strong>${1}</strong>',
+      '/\[(?!img_assist)(.*?)\|(.*?)\]/' => '<a href="${2}">${1}</a>',
+      '/\*(.*)\n/' => '<li>${1}</li>',
+      '/\!\!\!(.*)\n/' => '<h1>${1}</h1>',
+      '/\!\!(.*)\n/' => '<h2>${1}</h2>',
+      '/\!(.*)\n/' => '<h3>${1}</h3>',
+      '/\!([A-Z])(.*)\n/' => '<h3>${1}${2}</h3>',
+//      '/\!(\<a)(.*)\\r/' => '<h3>${1}${2}</h3>',
+//      '/\!(\<str)(.*)\\r/' => '<h3>${1}${2}</h3>',
+      '/\%\%\%/' => '<hr />',
+      '/---(.*)---\n/' => '<hr />',
+  );
+  $patterns = array();
+  $replacements = array();
+  foreach ($vikis as $pattern => $replacement) {
+    $patterns[] = $pattern;
+    $replacements[] = $replacement;
+  }
+  // replace in text
+  $text = preg_replace($patterns, $replacements, $text);
+
+  return $text;
+}
