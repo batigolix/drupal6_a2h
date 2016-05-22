@@ -1,5 +1,4 @@
 <?php
-// $Id: filter.module,v 1.204.2.17 2010/11/03 14:11:43 goba Exp $
 
 /**
  * @file
@@ -397,10 +396,9 @@ function filter_list_format($format) {
 }
 
 /**
- * @name Filtering functions
+ * @defgroup filtering_functions Filtering functions
  * @{
- * Modules which need to have content filtered can use these functions to
- * interact with the filter system.
+ * Functions for interacting with the content filtering system.
  *
  * For more info, see the hook_filter() documentation.
  *
@@ -604,19 +602,20 @@ function theme_filter_tips_more_info() {
 }
 
 /**
- * @name Standard filters
+ * @defgroup standard_filters Standard filters
  * @{
  * Filters implemented by the filter.module.
  */
 
 /**
- * Implementation of hook_filter(). Contains a basic set of essential filters.
- * - HTML filter:
- *     Validates user-supplied HTML, transforming it as necessary.
- * - Line break converter:
- *     Converts newlines into paragraph and break tags.
- * - URL and e-mail address filter:
- *     Converts newlines into paragraph and break tags.
+ * Implementation of hook_filter().
+ *
+ * Sets up a basic set of essential filters.
+ * - HTML filter: Restricts user-supplied HTML to certain tags, and removes
+ *   dangerous components in allowed tags.
+ * - Line break converter: Converts newlines into paragraph and break tags.
+ * - URL filter: Converts URLs and e-mail addresses into links.
+ * - HTML corrector: Fixes faulty HTML.
  */
 function filter_filter($op, $delta = 0, $format = -1, $text = '') {
   switch ($op) {
@@ -747,7 +746,7 @@ function _filter_url_settings($format) {
 
 /**
  * URL filter. Automatically converts text web addresses (URLs, e-mail addresses,
- * ftp links, etc.) into hyperlinks.
+ * FTP links, etc.) into hyperlinks.
  */
 function _filter_url($text, $format) {
   // Pass length to regexp callback
@@ -1202,53 +1201,6 @@ function _filter_xss_attributes($attr) {
     $attrarr[] = $attrname;
   }
   return $attrarr;
-}
-
-/**
- * Processes an HTML attribute value and ensures it does not contain an URL
- * with a disallowed protocol (e.g. javascript:)
- *
- * @param $string
- *   The string with the attribute value.
- * @param $decode
- *   Whether to decode entities in the $string. Set to FALSE if the $string
- *   is in plain text, TRUE otherwise. Defaults to TRUE.
- * @return
- *   Cleaned up and HTML-escaped version of $string.
- */
-function filter_xss_bad_protocol($string, $decode = TRUE) {
-  static $allowed_protocols;
-  if (!isset($allowed_protocols)) {
-    $allowed_protocols = array_flip(variable_get('filter_allowed_protocols', array('http', 'https', 'ftp', 'news', 'nntp', 'tel', 'telnet', 'mailto', 'irc', 'ssh', 'sftp', 'webcal', 'rtsp')));
-  }
-
-  // Get the plain text representation of the attribute value (i.e. its meaning).
-  if ($decode) {
-    $string = decode_entities($string);
-  }
-
-  // Iteratively remove any invalid protocol found.
-
-  do {
-    $before = $string;
-    $colonpos = strpos($string, ':');
-    if ($colonpos > 0) {
-      // We found a colon, possibly a protocol. Verify.
-      $protocol = substr($string, 0, $colonpos);
-      // If a colon is preceded by a slash, question mark or hash, it cannot
-      // possibly be part of the URL scheme. This must be a relative URL,
-      // which inherits the (safe) protocol of the base document.
-      if (preg_match('![/?#]!', $protocol)) {
-        break;
-      }
-      // Per RFC2616, section 3.2.3 (URI Comparison) scheme comparison must be case-insensitive
-      // Check if this is a disallowed protocol.
-      if (!isset($allowed_protocols[strtolower($protocol)])) {
-        $string = substr($string, $colonpos + 1);
-      }
-    }
-  } while ($before != $string);
-  return check_plain($string);
 }
 
 /**
