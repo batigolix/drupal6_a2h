@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the cristina export feature.
+ */
+
+include_once 'cristina_export.features.inc';
