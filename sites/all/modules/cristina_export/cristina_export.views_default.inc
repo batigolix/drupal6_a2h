@@ -83,6 +83,35 @@ function cristina_export_views_default_views() {
       'field' => 'tid',
       'relationship' => 'none',
     ),
+    'weight' => array(
+      'label' => 'weight',
+      'alter' => array(
+        'alter_text' => 0,
+        'text' => '',
+        'make_link' => 0,
+        'path' => '',
+        'link_class' => '',
+        'alt' => '',
+        'prefix' => '',
+        'suffix' => '',
+        'target' => '',
+        'help' => '',
+        'trim' => 0,
+        'max_length' => '',
+        'word_boundary' => 1,
+        'ellipsis' => 1,
+        'html' => 0,
+        'strip_tags' => 0,
+      ),
+      'empty' => '',
+      'hide_empty' => 0,
+      'empty_zero' => 0,
+      'exclude' => 0,
+      'id' => 'weight',
+      'table' => 'term_data',
+      'field' => 'weight',
+      'relationship' => 'none',
+    ),
   ));
   $handler->override_option('access', array(
     'type' => 'none',
@@ -407,6 +436,16 @@ function cristina_export_views_default_views() {
   ));
   $handler->override_option('items_per_page', 0);
   $handler->override_option('style_plugin', 'views_json');
+  $handler->override_option('style_options', array(
+    'root_object' => 'works',
+    'top_child_object' => 'work',
+    'field_output' => 'normal',
+    'plaintext_output' => 1,
+    'format' => 'simple',
+    'jsonp_prefix' => '',
+    'content_type' => 'default',
+    'using_views_api_mode' => 0,
+  ));
   $handler = $view->new_display('page', 'Page', 'page_1');
   $handler->override_option('path', 'works.json');
   $handler->override_option('menu', array(
