@@ -200,6 +200,35 @@ function cristina_export_views_default_views() {
       'field' => 'changed',
       'relationship' => 'none',
     ),
+    'body_1' => array(
+      'label' => 'body2',
+      'alter' => array(
+        'alter_text' => 0,
+        'text' => '',
+        'make_link' => 0,
+        'path' => '',
+        'link_class' => '',
+        'alt' => '',
+        'prefix' => '',
+        'suffix' => '',
+        'target' => '',
+        'help' => '',
+        'trim' => 0,
+        'max_length' => '',
+        'word_boundary' => 1,
+        'ellipsis' => 1,
+        'html' => 0,
+        'strip_tags' => 0,
+      ),
+      'empty' => '',
+      'hide_empty' => 0,
+      'empty_zero' => 0,
+      'exclude' => 0,
+      'id' => 'body_1',
+      'table' => 'node_revisions',
+      'field' => 'body',
+      'relationship' => 'none',
+    ),
   ));
   $handler->override_option('filters', array(
     'type' => array(
@@ -228,8 +257,8 @@ function cristina_export_views_default_views() {
   $handler->override_option('items_per_page', 0);
   $handler->override_option('style_plugin', 'views_json');
   $handler->override_option('style_options', array(
-    'root_object' => 'works',
-    'top_child_object' => 'work',
+    'root_object' => 'articles',
+    'top_child_object' => 'article',
     'field_output' => 'normal',
     'plaintext_output' => 1,
     'format' => 'simple',
