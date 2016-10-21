@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the vtv export feature.
+ */
+
+include_once 'vtv_export.features.inc';
