@@ -30,7 +30,7 @@ function boe_tools_filter($op, $delta = 'viki', $format = -1, $text = '') {
   // the returned name should be passed through t() for translation.
   if ($op == 'list') {
     return array(
-        0 => t('Substitute "viki"'),
+      0 => t('Substitute "viki"'),
     );
   }
 
@@ -83,17 +83,17 @@ function boe_tools_process_viki($text) {
 
   $vikis = array(// TODO complete this list
 
-      '/__(.*?)__/' => '<strong>${1}</strong>',
-      '/\[(?!img_assist)(.*?)\|(.*?)\]/' => '<a href="${2}">${1}</a>',
-      '/\*(.*)\n/' => '<li>${1}</li>',
-      '/\!\!\!(.*)\n/' => '<h1>${1}</h1>',
-      '/\!\!(.*)\n/' => '<h2>${1}</h2>',
-      '/\!(.*)\n/' => '<h3>${1}</h3>',
-      '/\!([A-Z])(.*)\n/' => '<h3>${1}${2}</h3>',
+    '/__(.*?)__/' => '<strong>${1}</strong>',
+    '/\[(?!img_assist)(.*?)\|(.*?)\]/' => '<a href="${2}">${1}</a>',
+    '/\*(.*)\n/' => '<li>${1}</li>',
+    '/\!\!\!(.*)\n/' => '<h1>${1}</h1>',
+    '/\!\!(.*)\n/' => '<h2>${1}</h2>',
+    '/\!(.*)\n/' => '<h3>${1}</h3>',
+    '/\!([A-Z])(.*)\n/' => '<h3>${1}${2}</h3>',
 //      '/\!(\<a)(.*)\\r/' => '<h3>${1}${2}</h3>',
 //      '/\!(\<str)(.*)\\r/' => '<h3>${1}${2}</h3>',
-      '/\%\%\%/' => '<hr />',
-      '/---(.*)---\n/' => '<hr />',
+    '/\%\%\%/' => '<hr />',
+    '/---(.*)---\n/' => '<hr />',
   );
   $patterns = array();
   $replacements = array();
@@ -106,3 +106,64 @@ function boe_tools_process_viki($text) {
 
   return $text;
 }
+
+
+/**
+ * Implementation of hook_menu().
+ */
+function boe_tools_menu() {
+  $items = array();
+
+  $items['boe-book-structure.json'] = array(
+    'title' => 'boe tools',
+    'description' => 'Manage settings',
+    'page callback' => 'boe_tools_books',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+
+  return $items;
+}
+
+/**
+ * Outputs books in JSON.
+ */
+function boe_tools_books() {
+  drupal_set_header('Content-Type: application/json');
+  $result = db_query("SELECT nid FROM node");
+  $data = array();
+  while ($obj = db_fetch_object($result)) {
+    $node = node_load($obj->nid);
+    if ($node->status && $node->book) {
+      $parent = book_link_load($node->book['plid']);
+      $x = 1;
+
+      // Reproduces the p1 - p9 properties.
+      $pees = array();
+      while ($x <= 9) {
+        if ($node->book['p' . $x] > 0) {
+          $link = book_link_load($node->book['p' . $x]);
+          $pees['p' . $x] = $link['nid'];
+        }
+        else {
+          $pees['p' . $x] = $node->book['p' . $x];
+        }
+        $x++;
+      }
+      $pid = $parent['nid'] ? $parent['nid'] : "0";
+      $data[] = array(
+          'title' => $node->title,
+          'nid' => $node->nid,
+          'bid' => $node->book['bid'],
+          'pid' => $pid,
+          'has_children' => $node->book['has_children'],
+          'weight' => $node->book['weight'],
+          'depth' => $node->book['depth'],
+        ) + $pees;
+    }
+  }
+  print json_encode($data);
+}
+
