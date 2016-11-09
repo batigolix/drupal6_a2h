@@ -123,6 +123,14 @@ function boe_tools_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
+  $items['content.json'] = array(
+    'title' => 'boe tools content json export',
+    'description' => 'xport content',
+    'page callback' => 'boe_tools_content',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+  );
 
   return $items;
 }
@@ -167,3 +175,28 @@ function boe_tools_books() {
   print json_encode($data);
 }
 
+/**
+ * Outputs books in JSON.
+ */
+function boe_tools_content() {
+  drupal_set_header('Content-Type: application/json; charset=UTF-8');
+  $result = db_query("SELECT nid FROM node WHERE status = 1");
+  $items = array();
+  while ($obj = db_fetch_object($result)) {
+    $node = node_load($obj->nid);
+    if ($node->status && $node->book) {
+      unset($node->book);
+      node_view($node);
+      $items[] = array(
+        'item' => array(
+          'title' => $node->title,
+          'nid' => $node->nid,
+          'body' => $node->body,
+          'created' => $node->created,
+          'changed' => $node->changed,
+        ),
+      );
+    }
+  }
+  print json_encode(array('content'=>$items));
+}
