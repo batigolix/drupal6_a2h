@@ -1734,10 +1734,10 @@ function _img_assist_textarea_match($formid) {
 function theme_img_assist_inline($node, $size, $attributes) {
   $caption = '';
   if ($attributes['title'] && $attributes['desc']) {
-    $caption = '<strong>'. $attributes['title'] .': </strong>'. $attributes['desc'];
+    $caption = $attributes['title'] .': '. $attributes['desc'];
   }
   elseif ($attributes['title']) {
-    $caption = '<strong>'. $attributes['title'] .'</strong>';
+    $caption = $attributes['title'];
   }
   elseif ($attributes['desc']) {
     $caption = $attributes['desc'];
@@ -1747,8 +1747,7 @@ function theme_img_assist_inline($node, $size, $attributes) {
   $node->title = strip_tags($caption);
   $img_tag = img_assist_display($node, $size);
   
-  // Always define an alignment class, even if it is 'none'.
-  $output = '<span class="inline inline-'. $attributes['align'] .'">';
+  $output = '<figure>';
 
   $link = $attributes['link'];
   $url  = '';
@@ -1784,13 +1783,13 @@ function theme_img_assist_inline($node, $size, $attributes) {
       // Reduce the caption width slightly so the variable width of the text
       // doesn't ever exceed image width.
       $width = $info['width'] - 2;
-      $output .= '<span class="caption" style="width: '. $width .'px;">'. $caption .'</span>';
+      $output .= '<figcaption>'. $caption .'</figcaption>';
     }
     else {
-      $output .= '<span class="caption">'. $caption .'</span>';
+      $output .= '<figcaption>'. $caption .'</figcaption>';
     }
   }
-  $output .= '</span>';
+  $output .= '</figure>';
   return $output;
 }
 
