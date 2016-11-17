@@ -1,0 +1,4 @@
+name = Cri Tools
+description = "Provides misc tools for Cristina website"
+package = Administration
+core = 6.x

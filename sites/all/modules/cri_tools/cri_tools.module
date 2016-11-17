@@ -1,0 +1,181 @@
+<?php
+
+/**
+ * Implementation of hook_menu().
+ */
+function cri_tools_menu() {
+  $items = array();
+
+  $items['articles.json'] = array(
+    'title' => 'cri tools articles',
+    'description' => 'cri tools articles',
+    'page callback' => 'cri_tools_articles',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['galleries.json'] = array(
+    'title' => 'cri tools galleries',
+    'description' => 'cri tools galleries',
+    'page callback' => 'cri_tools_galleries',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['content.json'] = array(
+    'title' => 'boe tools content json export',
+    'description' => 'xport content',
+    'page callback' => 'cri_tools_content',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Outputs books in JSON.
+ */
+function cri_tools_books() {
+  drupal_set_header('Content-Type: application/json');
+  $result = db_query("SELECT nid FROM node");
+  $data = array();
+  while ($obj = db_fetch_object($result)) {
+    $node = node_load($obj->nid);
+    if ($node->status && $node->book) {
+      $parent = book_link_load($node->book['plid']);
+      $x = 1;
+
+      // Reproduces the p1 - p9 properties.
+      $pees = array();
+      while ($x <= 9) {
+        if ($node->book['p' . $x] > 0) {
+          $link = book_link_load($node->book['p' . $x]);
+          $pees['p' . $x] = $link['nid'];
+        }
+        else {
+          $pees['p' . $x] = $node->book['p' . $x];
+        }
+        $x++;
+      }
+      $pid = $parent['nid'] ? $parent['nid'] : "0";
+      $data[] = array(
+          'title' => $node->title,
+          'nid' => $node->nid,
+          'bid' => $node->book['bid'],
+          'pid' => $pid,
+          'has_children' => $node->book['has_children'],
+          'weight' => $node->book['weight'],
+          'depth' => $node->book['depth'],
+        ) + $pees;
+    }
+  }
+  print json_encode($data);
+}
+
+/**
+ * Outputs books in JSON.
+ */
+function cri_tools_content() {
+  drupal_set_header('Content-Type: application/json; charset=UTF-8');
+  $result = db_query("SELECT nid FROM node WHERE status = 1");
+  $items = array();
+  while ($obj = db_fetch_object($result)) {
+    $node = node_load($obj->nid);
+    if ($node->status && $node->book) {
+      unset($node->book);
+      node_view($node);
+      $items[] = array(
+        'item' => array(
+          'title' => $node->title,
+          'nid' => $node->nid,
+          'body' => $node->body,
+          'created' => $node->created,
+          'changed' => $node->changed,
+        ),
+      );
+    }
+  }
+  print json_encode(array('content' => $items));
+}
+
+/**
+ * Outputs books in JSON.
+ */
+function cri_tools_articles() {
+  drupal_set_header('Content-Type: application/json; charset=UTF-8');
+  $result = db_query("SELECT nid FROM node WHERE status = 1 AND type= 'story'");
+  $items = array();
+  while ($obj = db_fetch_object($result)) {
+    $node = node_load($obj->nid);
+    $teaser = $node->teaser;
+
+//    var_dump($node);
+    node_view($node);
+//    var_dump($node);
+
+
+    $matches = get_matched($node->body);
+    $items[$node->nid] = array(
+      'item' => array(
+        'title' => $node->title,
+        'nid' => $node->nid,
+        'summary' => $teaser,
+        'body' => $node->body,
+        'created' => $node->created,
+        'changed' => $node->changed,
+      ),
+    );
+    if ($matches[0]) {
+      $items[$node->nid]['item']['image'] = $matches[0];
+    }
+  }
+  print json_encode(array('content' => $items));
+}
+
+/**
+ * Outputs galleries in JSON.
+ */
+function cri_tools_galleries() {
+  drupal_set_header('Content-Type: application/json; charset=UTF-8');
+  $result = db_query("SELECT tid,vid,name,description,weight FROM term_data");
+  $items = array();
+  while ($obj = db_fetch_object($result)) {
+    $resultn = db_query("SELECT n.nid,n.sticky,n.created FROM node n LEFT JOIN term_node tn ON n.nid=tn.nid WHERE tn.tid = " . $obj->tid . " ORDER BY n.sticky DESC, n.created DESC");
+    $images = array();
+    while ($objn = db_fetch_object($resultn)) {
+      $node = node_load($objn->nid);
+      $images[] = $node->images['_original'];
+    }
+    $items[$obj->tid] = array(
+      'gallery' => array(
+        'name' => $obj->name,
+        'tid' => $obj->tid,
+        'description' => $obj->description,
+        'weight' => $obj->weight,
+        'vid' => $obj->vid,
+      ),
+    );
+    if (count($images) > 0) {
+      $image = str_replace('sites/cristinasilvan.com', 'http://cristina.val/sites/cristina.val', $images[0]);
+      $items[$node->nid]['gallery']['image'] = $image;
+    }
+  }
+  print json_encode(array('galleries' => $items));
+}
+
+function get_matched($html) {
+  $matched = array();
+  $dom = new DOMDocument();
+  @$dom->loadHtml($html);
+  $length = $dom->getElementsByTagName('img')->length;
+  for ($i = 0; $i < $length; $i++) {
+    $matched[] = $dom->getElementsByTagName("img")
+      ->item($i)
+      ->getAttribute('src');
+  }
+  return $matched;
+}
