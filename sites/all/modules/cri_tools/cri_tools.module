@@ -141,27 +141,35 @@ function cri_tools_articles() {
  */
 function cri_tools_galleries() {
   drupal_set_header('Content-Type: application/json; charset=UTF-8');
+
+  // Fetches terms belonging to this vocabulary.
   $result = db_query("SELECT tid,vid,name,description,weight FROM term_data");
   $items = array();
   while ($obj = db_fetch_object($result)) {
+
+    // Fetches images attached to nodes belonging to this term.
     $resultn = db_query("SELECT n.nid,n.sticky,n.created FROM node n LEFT JOIN term_node tn ON n.nid=tn.nid WHERE tn.tid = " . $obj->tid . " ORDER BY n.sticky DESC, n.created DESC");
     $images = array();
     while ($objn = db_fetch_object($resultn)) {
       $node = node_load($objn->nid);
       $images[] = $node->images['_original'];
     }
+
+    // Prepares the JSON output.
     $items[$obj->tid] = array(
       'gallery' => array(
         'name' => $obj->name,
         'tid' => $obj->tid,
-        'description' => $obj->description,
+        'year' => $obj->description,
         'weight' => $obj->weight,
         'vid' => $obj->vid,
       ),
     );
     if (count($images) > 0) {
+//      var_dump($images[0]);
+
       $image = str_replace('sites/cristinasilvan.com', 'http://cristina.val/sites/cristina.val', $images[0]);
-      $items[$node->nid]['gallery']['image'] = $image;
+      $items[$obj->tid]['gallery']['image'] = $image;
     }
   }
   print json_encode(array('galleries' => $items));
