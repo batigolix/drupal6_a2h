@@ -114,7 +114,7 @@ function boe_tools_process_viki($text) {
 function boe_tools_menu() {
   $items = array();
 
-  $items['boe-book-structure.json'] = array(
+  $items['boe_tools/book-structure.json'] = array(
     'title' => 'boe tools',
     'description' => 'Manage settings',
     'page callback' => 'boe_tools_books',
@@ -123,7 +123,7 @@ function boe_tools_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
-  $items['content.json'] = array(
+  $items['boe_tools/content.json'] = array(
     'title' => 'boe tools content json export',
     'description' => 'xport content',
     'page callback' => 'boe_tools_content',
@@ -187,11 +187,22 @@ function boe_tools_content() {
     if ($node->status && $node->book) {
       unset($node->book);
       node_view($node);
+//      $doh = node_view($node);
+//dd($doh);
+//      dd('asdsaed');
+
+
+      $body = $node->body;
+//      dd($body);
+      $body = str_replace('http://vtv6.dvmwk.kem/sites/www.volkstheater-venlo.nl/files', '/files', $body);
+      $body = str_replace('http://www.volkstheater-venlo.nl/', '/', $body);
+//      dd($body);
+
       $items[] = array(
         'item' => array(
           'title' => $node->title,
           'nid' => $node->nid,
-          'body' => $node->body,
+          'body' => $body,
           'created' => $node->created,
           'changed' => $node->changed,
         ),
